@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Builds By Daniel | Construction, Electrical &amp; Mechanical Systems</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            slate: {
+              950: '#0b0f14',
+              900: '#0f172a',
+              850: '#162033',
+              800: '#1e293b',
+            },
+            copper: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* Lock root viewport so document never scrolls independently of deck */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #0b0f14;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+
+    /* Full-page PowerPoint-style vertical scroll-snap deck */
+    #deck-container {
+      height: 100vh;
+      height: 100dvh;
+      width: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    #deck-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Every slide strictly locked to a single full viewport frame */
+    .slide-section {
+      height: 100vh;
+      height: 100dvh;
+      min-height: 100vh;
+      min-height: 100dvh;
+      max-height: 100vh;
+      max-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Architectural blueprint grid texture */
+    .blueprint-grid {
+      background-image: 
+        linear-gradient(to right, rgba(248, 250, 252, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(248, 250, 252, 0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* Right-side slide dot indicator transitions */
+    .nav-dot {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-dot.active {
+      height: 1.75rem;
+      background-color: #d97706;
+      box-shadow: 0 0 12px rgba(217, 119, 6, 0.7);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-50 antialiased selection:bg-amber-600 selection:text-white">
+
+  <!-- Fixed Top Minimalist Presentation Header -->
+  <header class="fixed top-0 left-0 right-0 z-40 pointer-events-none px-4 sm:px-8 py-3 flex items-center justify-between">
+    <!-- Brand Badge -->
+    <button onclick="goToSlide(0)" class="pointer-events-auto flex items-center gap-2.5 bg-slate-950/85 backdrop-blur-md border border-slate-800 rounded-full pr-4 pl-1.5 py-1 shadow-lg hover:border-amber-600/70 transition group">
+      <img 
+        src="http://googleusercontent.com/image_generation_content/6420431226100384080" 
+        onerror="this.onerror=null;this.src='https://placehold.co/100x100/1e293b/d97706?text=BBD';"
+        alt="Builds By Daniel Logo" 
+        class="w-8 h-8 rounded-full object-cover object-top border border-amber-600/80"
+      />
+      <div class="text-left">
+        <span class="font-display font-bold text-xs sm:text-sm tracking-wide text-slate-50 block leading-none">BUILDS BY DANIEL</span>
+        <span class="text-[9px] uppercase tracking-widest text-amber-500 font-semibold block mt-0.5">Field Engineering &amp; Trades</span>
+      </div>
+    </button>
+
+    <!-- Slide Progress Counter & Quick CTA -->
+    <div class="pointer-events-auto flex items-center gap-2.5">
+      <div class="hidden sm:flex items-center gap-2 bg-slate-950/85 backdrop-blur-md border border-slate-800 rounded-full px-3.5 py-1.5 text-xs font-mono text-slate-300 shadow-lg">
+        <span class="text-amber-500 font-bold" id="slide-counter-current">01</span>
+        <span class="text-slate-600">/</span>
+        <span>05</span>
+        <span class="mx-1 text-slate-700">|</span>
+        <span id="slide-counter-label" class="text-slate-200 font-sans font-semibold text-[11px] tracking-wider">THE ANCHOR</span>
+      </div>
+
+      <button onclick="goToSlide(4)" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-full shadow-lg shadow-amber-600/20 transition transform active:scale-95">
+        Book Estimate
+      </button>
+    </div>
+  </header>
+
+  <!-- Fixed Side Presentation Dot Navigation with Hover Tooltips -->
+  <nav aria-label="Slide Navigation" class="fixed right-3 sm:right-5 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 bg-slate-950/80 backdrop-blur-md border border-slate-800/90 py-3 px-2 rounded-full shadow-xl">
+    <button onclick="goToSlide(0)" aria-label="Slide 1: The Anchor" class="group relative flex items-center justify-center p-0.5">
+      <span class="pointer-events-none absolute right-8 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-700 text-[10px] font-mono font-bold text-amber-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">01 // THE ANCHOR</span>
+      <span class="nav-dot active block w-2.5 h-2.5 rounded-full bg-slate-600 group-hover:bg-amber-500" data-index="0"></span>
+    </button>
+    <button onclick="goToSlide(1)" aria-label="Slide 2: Story & Roots" class="group relative flex items-center justify-center p-0.5">
+      <span class="pointer-events-none absolute right-8 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-700 text-[10px] font-mono font-bold text-amber-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">02 // STORY &amp; ROOTS</span>
+      <span class="nav-dot block w-2.5 h-2.5 rounded-full bg-slate-600 group-hover:bg-amber-500" data-index="1"></span>
+    </button>
+    <button onclick="goToSlide(2)" aria-label="Slide 3: Core Capabilities" class="group relative flex items-center justify-center p-0.5">
+      <span class="pointer-events-none absolute right-8 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-700 text-[10px] font-mono font-bold text-amber-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">03 // CAPABILITIES</span>
+      <span class="nav-dot block w-2.5 h-2.5 rounded-full bg-slate-600 group-hover:bg-amber-500" data-index="2"></span>
+    </button>
+    <button onclick="goToSlide(3)" aria-label="Slide 4: Project Highlights" class="group relative flex items-center justify-center p-0.5">
+      <span class="pointer-events-none absolute right-8 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-700 text-[10px] font-mono font-bold text-amber-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">04 // PROJECTS</span>
+      <span class="nav-dot block w-2.5 h-2.5 rounded-full bg-slate-600 group-hover:bg-amber-500" data-index="3"></span>
+    </button>
+    <button onclick="goToSlide(4)" aria-label="Slide 5: Direct Contact" class="group relative flex items-center justify-center p-0.5">
+      <span class="pointer-events-none absolute right-8 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-700 text-[10px] font-mono font-bold text-amber-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">05 // DIRECT CONTACT</span>
+      <span class="nav-dot block w-2.5 h-2.5 rounded-full bg-slate-600 group-hover:bg-amber-500" data-index="4"></span>
+    </button>
+  </nav>
+
+  <!-- Fixed Bottom Presentation Controls (Keyboard Hint + Prev / Next Arrows) -->
+  <div class="fixed bottom-3 right-4 sm:right-8 z-40 flex items-center gap-2.5">
+    <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-400">
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">↑</kbd>
+      <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">↓</kbd>
+      <span>or Swipe</span>
+    </span>
+    <button id="prev-slide-btn" onclick="prevSlide()" aria-label="Previous Slide" class="p-2.5 rounded-full bg-slate-900/95 hover:bg-slate-800 border border-slate-700 text-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition shadow-lg">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+      </svg>
+    </button>
+    <button id="next-slide-btn" onclick="nextSlide()" aria-label="Next Slide" class="p-2.5 rounded-full bg-amber-600 hover:bg-amber-500 text-slate-950 disabled:opacity-30 disabled:cursor-not-allowed transition shadow-lg shadow-amber-600/25">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Main Scroll-Snap Presentation Deck -->
+  <main id="deck-container">
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 01: HERO / THE ANCHOR                                         -->
+    <!-- =================================================================== -->
+    <section id="slide-0" data-title="THE ANCHOR" class="slide-section blueprint-grid bg-slate-950 px-4 sm:px-10 lg:px-16 pt-14 pb-10">
+      <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto w-full max-h-full grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-center">
+        <!-- Left Copy Column -->
+        <div class="lg:col-span-7 space-y-3 sm:space-y-4 text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-amber-600/40 text-amber-400 text-[11px] font-mono font-semibold tracking-wider uppercase">
+            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            Construction • Remodeling • Electrical • Mechanical
+          </div>
+
+          <h1 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl tracking-tight text-slate-50 leading-[1.06]">
+            Civil Engineering Mindset. <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Real-World Execution.</span>
+          </h1>
+
+          <p class="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed">
+            Structural remodeling, electrical diagnostics, and custom mechanical systems built to last. Practical field engineering backed by over a decade of hands-on mastery—no shortcuts, no guesswork.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <button onclick="goToSlide(4)" class="px-5 py-2.5 sm:py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-amber-600/25 transition transform hover:-translate-y-0.5">
+              Start a Project Inquiry →
+            </button>
+            <button onclick="goToSlide(1)" class="px-5 py-2.5 sm:py-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-100 font-semibold text-xs sm:text-sm transition">
+              Explore Daniel's Story
+            </button>
+          </div>
+
+          <!-- Quick Credential Strip -->
+          <div class="grid grid-cols-3 gap-4 pt-3 border-t border-slate-800/90 max-w-lg">
+            <div>
+              <span class="font-display font-bold text-lg sm:text-2xl text-amber-500 block leading-none">2012</span>
+              <span class="text-[11px] text-slate-400 mt-1 block">Apprenticeship Roots</span>
+            </div>
+            <div>
+              <span class="font-display font-bold text-lg sm:text-2xl text-slate-50 block leading-none">4-in-1</span>
+              <span class="text-[11px] text-slate-400 mt-1 block">Multi-Trade Systems</span>
+            </div>
+            <div>
+              <span class="font-display font-bold text-lg sm:text-2xl text-slate-50 block leading-none">100%</span>
+              <span class="text-[11px] text-slate-400 mt-1 block">Direct Accountability</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Locked Portrait & Mascot Card -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative w-full max-w-[230px] sm:max-w-[300px] lg:max-w-[360px]">
+            <div class="absolute -top-2.5 -left-2.5 w-8 h-8 border-t-4 border-l-4 border-amber-600 rounded-tl-xl pointer-events-none"></div>
+            <div class="absolute -bottom-2.5 -right-2.5 w-8 h-8 border-b-4 border-r-4 border-amber-600 rounded-br-xl pointer-events-none"></div>
+
+            <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-2.5 shadow-2xl">
+              <div class="relative overflow-hidden rounded-xl aspect-square bg-slate-950">
+                <img 
+                  src="../Builds_by_Daniel/BBD_Hero.jpg" 
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x600/1e293b/d97706?text=Daniel+%26+Gallow';"
+                  alt="Daniel with his Chinese Crested mascot dog Gallow" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent p-3 sm:p-4 flex items-end justify-between">
+                  <div>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold block">Builds By Daniel</span>
+                    <span class="font-display font-bold text-base sm:text-lg text-white leading-tight">Daniel &amp; Gallow</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-md bg-slate-950/90 border border-amber-600/50 text-[10px] font-mono font-semibold text-amber-300">
+                    Official Mark
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 02: STORY & ROOTS (BUILT ON GRIT)                             -->
+    <!-- =================================================================== -->
+    <section id="slide-1" data-title="STORY & ROOTS" class="slide-section bg-slate-900/40 blueprint-grid px-4 sm:px-10 lg:px-16 pt-14 pb-10">
+      <div class="max-w-6xl mx-auto w-full max-h-full flex flex-col justify-center space-y-4 sm:space-y-6">
+        <!-- Section Header -->
+        <div class="max-w-3xl space-y-2">
+          <div class="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-bold">
+            SLIDE 02 // HERITAGE &amp; FOUNDATION
+          </div>
+          <h2 class="font-display font-bold text-2xl sm:text-4xl lg:text-5xl text-slate-50 leading-tight">
+            Built on Grit, Heritage &amp; Field Discipline.
+          </h2>
+          <p class="text-slate-300 text-xs sm:text-sm lg:text-base leading-relaxed">
+            At 32, Daniel brings the resilience of his <strong class="text-amber-400 font-semibold">Alaskan Native heritage</strong> to every job site. Raised to value self-reliance and enduring craftsmanship, he treats every structure and system as if his own family relies on it.
+          </p>
+        </div>
+
+        <!-- 3-Stage Career & Apprenticeship Timeline -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
+          <!-- Card 1: 2012 Apprenticeship -->
+          <div class="bg-slate-900/90 border border-slate-800 hover:border-amber-600/60 rounded-2xl p-4 sm:p-5 transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="px-2.5 py-0.5 rounded-md bg-amber-600/15 text-amber-400 font-mono text-[11px] font-bold border border-amber-600/30">
+                  2012 – 2015
+                </span>
+                <span class="text-slate-500 font-mono text-[11px]">PHASE 01</span>
+              </div>
+              <h3 class="font-display font-bold text-base sm:text-lg text-slate-50 mb-1.5">
+                3-Year Contracting Apprenticeship
+              </h3>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Started from the ground up in 2012 under a trusted family friend’s contracting company—mastering framing, concrete, rough-ins, and job-site sequencing through three demanding years in the field.
+              </p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-800 text-[11px] font-mono text-amber-400/90 font-medium">
+              Foundation: Structural &amp; Remodel Craft
+            </div>
+          </div>
+
+          <!-- Card 2: Multi-System Mastery -->
+          <div class="bg-slate-900/90 border border-slate-800 hover:border-amber-600/60 rounded-2xl p-4 sm:p-5 transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="px-2.5 py-0.5 rounded-md bg-amber-600/15 text-amber-400 font-mono text-[11px] font-bold border border-amber-600/30">
+                  2015 – PRESENT
+                </span>
+                <span class="text-slate-500 font-mono text-[11px]">PHASE 02</span>
+              </div>
+              <h3 class="font-display font-bold text-base sm:text-lg text-slate-50 mb-1.5">
+                Electrical &amp; Mechanical Intuition
+              </h3>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Expanded far beyond basic carpentry into complex electrical troubleshooting and mechanical systems—diagnosing load, flow, and structural intersections with natural engineering intuition.
+              </p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-800 text-[11px] font-mono text-amber-400/90 font-medium">
+              Edge: Holistic Systems Thinking
+            </div>
+          </div>
+
+          <!-- Card 3: Direct Web Anchor -->
+          <div class="bg-slate-900/90 border border-amber-600/50 rounded-2xl p-4 sm:p-5 transition flex flex-col justify-between shadow-lg shadow-amber-600/5">
+            <div>
+              <div class="flex items-center justify-between mb-2.5">
+                <span class="px-2.5 py-0.5 rounded-md bg-amber-600 text-slate-950 font-mono text-[11px] font-bold">
+                  TODAY
+                </span>
+                <span class="text-slate-400 font-mono text-[11px]">PHASE 03</span>
+              </div>
+              <h3 class="font-display font-bold text-base sm:text-lg text-slate-50 mb-1.5">
+                Builds By Daniel — Direct Anchor
+              </h3>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Moving beyond word-of-mouth and marketplace listings to give homeowners and property operators direct access to an honest, resilient problem-solver who sees the whole blueprint.
+              </p>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-800 text-[11px] font-mono text-amber-400 font-medium">
+              Promise: Built Right the First Time
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 03: CORE CAPABILITIES (THE CIVIL ENGINEER EDGE)               -->
+    <!-- =================================================================== -->
+    <section id="slide-2" data-title="CORE CAPABILITIES" class="slide-section blueprint-grid bg-slate-950 px-4 sm:px-10 lg:px-16 pt-14 pb-10">
+      <div class="max-w-6xl mx-auto w-full max-h-full flex flex-col justify-center space-y-4 sm:space-y-5">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-2">
+          <div class="space-y-1.5 max-w-2xl">
+            <div class="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-bold">
+              SLIDE 03 // TECHNICAL DISCIPLINES
+            </div>
+            <h2 class="font-display font-bold text-2xl sm:text-4xl lg:text-5xl text-slate-50 leading-tight">
+              The "Civil Engineer Without a Degree" Edge.
+            </h2>
+          </div>
+          <p class="text-slate-400 text-xs sm:text-sm max-w-sm">
+            Where structural framing meets live electrical load and mechanical flow—Daniel bridges the gaps between trades.
+          </p>
+        </div>
+
+        <!-- 4 Capability Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+          <!-- Discipline 1 -->
+          <div class="bg-slate-900/90 border border-slate-800 hover:border-amber-600/60 rounded-2xl p-4 sm:p-5 transition group">
+            <div class="flex items-start gap-3.5">
+              <div class="p-2.5 rounded-xl bg-amber-600/15 border border-amber-600/30 text-amber-400 shrink-0 group-hover:bg-amber-600 group-hover:text-slate-950 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M4 21V7l8-4 8 4v14M9 21v-6h6v6" />
+                </svg>
+              </div>
+              <div class="space-y-1">
+                <h3 class="font-display font-bold text-base sm:text-lg text-slate-50">
+                  Structural Construction &amp; Full Remodeling
+                </h3>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Load-bearing modifications, framing, subfloor reconstruction, custom finish carpentry, and full interior/exterior renovations executed with clean tolerances.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Discipline 2 -->
+          <div class="bg-slate-900/90 border border-slate-800 hover:border-amber-600/60 rounded-2xl p-4 sm:p-5 transition group">
+            <div class="flex items-start gap-3.5">
+              <div class="p-2.5 rounded-xl bg-amber-600/15 border border-amber-600/30 text-amber-400 shrink-0 group-hover:bg-amber-600 group-hover:text-slate-950 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div class="space-y-1">
+                <h3 class="font-display font-bold text-base sm:text-lg text-slate-50">
+                  Electrical Systems &amp; Troubleshooting
+                </h3>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Circuit diagnostics, dedicated equipment runs, lighting architecture, panel/subpanel upgrades, and fault isolation that eliminates mystery electrical issues.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Discipline 3 -->
+          <div class="bg-slate-900/90 border border-slate-800 hover:border-amber-600/60 rounded-2xl p-4 sm:p-5 transition group">
+            <div class="flex items-start gap-3.5">
+              <div class="p-2.5 rounded-xl bg-amber-600/15 border border-amber-600/30 text-amber-400 shrink-0 group-hover:bg-amber-600 group-hover:text-slate-950 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div class="space-y-1">
+                <h3 class="font-display font-bold text-base sm:text-lg text-slate-50">
+                  Mechanical Diagnostics &amp; Installations
+                </h3>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Natural aptitude for mechanical assemblies, ventilation, pumps, actuators, equipment rigging, and custom hardware fabrication where standard kits fall short.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Discipline 4 -->
+          <div class="bg-slate-900/90 border border-slate-800 hover:border-amber-600/60 rounded-2xl p-4 sm:p-5 transition group">
+            <div class="flex items-start gap-3.5">
+              <div class="p-2.5 rounded-xl bg-amber-600/15 border border-amber-600/30 text-amber-400 shrink-0 group-hover:bg-amber-600 group-hover:text-slate-950 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+              </div>
+              <div class="space-y-1">
+                <h3 class="font-display font-bold text-base sm:text-lg text-slate-50">
+                  Civil-Style Site Planning &amp; Problem Solving
+                </h3>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Grading, water runoff mitigation, utility routing, and structural stabilization—stepping in to engineer practical solutions on tough projects others walk away from.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 04: FEATURED PROJECT HIGHLIGHTS                               -->
+    <!-- =================================================================== -->
+    <section id="slide-3" data-title="PROJECT HIGHLIGHTS" class="slide-section bg-slate-900/40 blueprint-grid px-4 sm:px-10 lg:px-16 pt-14 pb-10">
+      <div class="max-w-6xl mx-auto w-full max-h-full flex flex-col justify-center space-y-4 sm:space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div class="space-y-1">
+            <div class="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-bold">
+              SLIDE 04 // PROVEN FIELD LOGS
+            </div>
+            <h2 class="font-display font-bold text-2xl sm:text-4xl lg:text-5xl text-slate-50 leading-tight">
+              Featured Project Highlights
+            </h2>
+          </div>
+
+          <!-- Interactive Category Filter Pills -->
+          <div class="flex flex-wrap gap-1.5" id="project-filters">
+            <button onclick="filterProjects('all', this)" class="filter-btn active px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-amber-600 text-slate-950 transition">
+              ALL
+            </button>
+            <button onclick="filterProjects('civil', this)" class="filter-btn px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
+              CIVIL / SITE
+            </button>
+            <button onclick="filterProjects('electrical', this)" class="filter-btn px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
+              ELECTRICAL
+            </button>
+            <button onclick="filterProjects('mechanical', this)" class="filter-btn px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
+              MECHANICAL
+            </button>
+            <button onclick="filterProjects('remodel', this)" class="filter-btn px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-700 transition">
+              REMODEL
+            </button>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="projects-grid">
+          <!-- Project 1 -->
+          <article data-category="remodel" class="project-card bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-amber-600/60 transition">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-amber-600/15 text-amber-400 text-[10px] font-mono font-bold uppercase">
+                  Structural Remodel
+                </span>
+                <span class="text-[11px] text-slate-400 font-mono">LOG #104</span>
+              </div>
+              <h3 class="font-display font-bold text-lg text-slate-50 leading-snug">
+                Load-Bearing Open-Span Kitchen &amp; Beam Retrofit
+              </h3>
+              <div class="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <p><strong class="text-slate-100">Scope:</strong> Removed two compartmentalized interior walls and rebuilt subfloor joists.</p>
+                <p><strong class="text-slate-100">Engineering:</strong> Installed concealed LVL header beam with reinforced point-load transfer to foundation piers.</p>
+              </div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-[11px] text-emerald-400 font-semibold">✓ Zero deflection</span>
+              <button onclick="openProjectModal(0)" class="text-[11px] font-mono font-bold text-amber-400 hover:text-amber-300 underline underline-offset-4">
+                VIEW SPECS →
+              </button>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article data-category="electrical mechanical" class="project-card bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-amber-600/60 transition">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-amber-600/15 text-amber-400 text-[10px] font-mono font-bold uppercase">
+                  Electrical &amp; Mechanical
+                </span>
+                <span class="text-[11px] text-slate-400 font-mono">LOG #209</span>
+              </div>
+              <h3 class="font-display font-bold text-lg text-slate-50 leading-snug">
+                Workshop Subpanel, 240V Circuitry &amp; Exhaust Rig
+              </h3>
+              <div class="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <p><strong class="text-slate-100">Scope:</strong> Outfitted detached garage shop for heavy welder, compressor, and dust collection.</p>
+                <p><strong class="text-slate-100">Engineering:</strong> Balanced 100A subpanel load, ran armored conduit, and built damper-controlled mechanical exhaust.</p>
+              </div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-[11px] text-emerald-400 font-semibold">✓ Turnkey shop power</span>
+              <button onclick="openProjectModal(1)" class="text-[11px] font-mono font-bold text-amber-400 hover:text-amber-300 underline underline-offset-4">
+                VIEW SPECS →
+              </button>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article data-category="civil" class="project-card bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-amber-600/60 transition">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded bg-amber-600/15 text-amber-400 text-[10px] font-mono font-bold uppercase">
+                  Civil / Site Buildout
+                </span>
+                <span class="text-[11px] text-slate-400 font-mono">LOG #312</span>
+              </div>
+              <h3 class="font-display font-bold text-lg text-slate-50 leading-snug">
+                French Drain Slope Correction &amp; Utility Trenching
+              </h3>
+              <div class="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <p><strong class="text-slate-100">Scope:</strong> Chronic foundation water pooling and outbuilding utility feed.</p>
+                <p><strong class="text-slate-100">Engineering:</strong> Laser-leveled positive grade swale, gravel-wrapped perforated drainage, and sleeved underground conduit.</p>
+              </div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-[11px] text-emerald-400 font-semibold">✓ Dry foundation</span>
+              <button onclick="openProjectModal(2)" class="text-[11px] font-mono font-bold text-amber-400 hover:text-amber-300 underline underline-offset-4">
+                VIEW SPECS →
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 05: COHESIVE DIRECT DISPATCH & ESTIMATE DESK + FOOTER         -->
+    <!-- =================================================================== -->
+    <section id="slide-4" data-title="DIRECT CONTACT" class="slide-section blueprint-grid bg-slate-950 px-4 sm:px-10 lg:px-16 pt-14 pb-8">
+      <div class="max-w-6xl mx-auto w-full max-h-full flex flex-col justify-between gap-3 sm:gap-4">
+        <!-- Cohesive Slide Header Bar -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-2 border-b border-slate-800/90 pb-2.5">
+          <div>
+            <div class="text-[11px] font-mono uppercase tracking-widest text-amber-500 font-bold">
+              SLIDE 05 // DIRECT DISPATCH &amp; ESTIMATE DESK
+            </div>
+            <h2 class="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-slate-50 leading-none mt-1">
+              LOCK IN YOUR PROJECT.
+            </h2>
+          </div>
+          <p class="text-slate-400 text-xs sm:text-sm max-w-md">
+            Bypass Facebook Marketplace clutter. Connect directly with Daniel for honest assessments, site walk-throughs, and multi-system execution.
+          </p>
+        </div>
+
+        <!-- Two-Column Cohesive Dispatch & Project Scope Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+          <!-- Left Card: Direct Dispatch Channels -->
+          <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3">
+            <div class="flex items-center justify-between gap-3 pb-2.5 border-b border-slate-800">
+              <div class="flex items-center gap-3">
+                <img 
+                  src="http://googleusercontent.com/image_generation_content/6420431226100384080" 
+                  onerror="this.onerror=null;this.src='https://placehold.co/80x80/1e293b/d97706?text=D';"
+                  alt="Daniel & Gallow" 
+                  class="w-10 h-10 rounded-xl object-cover border border-amber-600/60"
+                />
+                <div>
+                  <span class="font-display font-bold text-sm text-slate-50 block">Daniel — Lead Builder</span>
+                  <span class="text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    ACCEPTING NEW BUILDS // DIRECT LINE
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Uniform Direct Action Buttons -->
+            <div class="space-y-2">
+              <a href="tel:+15550192834" class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-600/60 transition group">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-amber-600/15 text-amber-400 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-slate-950 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Call Direct</span>
+                    <span class="text-xs sm:text-sm font-bold text-slate-100">(469) 826-3781</span>
+                  </div>
+                </div>
+                <span class="text-[10px] font-mono text-amber-400">VOICE →</span>
+              </a>
+
+              <a href="sms:+15550192834?body=Hey%20Daniel%2C%20I%20found%20Builds%20By%20Daniel%20and%20have%20a%20project%20to%20discuss." class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-600/60 transition group">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-amber-600/15 text-amber-400 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-slate-950 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Text Job Photos via SMS</span>
+                    <span class="text-xs sm:text-sm font-bold text-slate-100">(469) 826-3781</span>
+                  </div>
+                </div>
+                <span class="text-[10px] font-mono text-amber-400">SMS →</span>
+              </a>
+
+              <a href="mailto:daniel@buildsbydaniel.com" class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-600/60 transition group">
+                <div class="flex items-center gap-3">
+                  <span class="w-8 h-8 rounded-lg bg-amber-600/15 text-amber-400 flex items-center justify-center shrink-0 group-hover:bg-amber-600 group-hover:text-slate-950 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="text-[10px] font-mono uppercase text-slate-400 block">Direct Email (Secondary)</span>
+                    <span class="text-xs sm:text-sm font-bold text-slate-100">gallo@buildsbydaniel.com</span>
+                  </div>
+                </div>
+                <span class="text-[10px] font-mono text-slate-400">MAIL →</span>
+              </a>
+            </div>
+
+            <!-- 3-Step Intake Strip -->
+            <div class="pt-2 border-t border-slate-800 grid grid-cols-3 gap-2 text-center">
+              <div class="bg-slate-950/70 rounded-lg p-2 border border-slate-800/80">
+                <span class="text-[10px] font-mono text-amber-500 font-bold block">01 // BRIEF</span>
+                <span class="text-[10px] text-slate-400">Send Scope</span>
+              </div>
+              <div class="bg-slate-950/70 rounded-lg p-2 border border-slate-800/80">
+                <span class="text-[10px] font-mono text-amber-500 font-bold block">02 // WALK</span>
+                <span class="text-[10px] text-slate-400">Site Review</span>
+              </div>
+              <div class="bg-slate-950/70 rounded-lg p-2 border border-slate-800/80">
+                <span class="text-[10px] font-mono text-amber-500 font-bold block">03 // BUILD</span>
+                <span class="text-[10px] text-slate-400">Clean Execution</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Card: Compact Interactive Estimate Form -->
+          <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-display font-bold text-base sm:text-lg text-slate-50">Project Scope Brief</span>
+              <span class="px-2.5 py-0.5 rounded bg-slate-950 border border-amber-600/40 text-[10px] font-mono text-amber-400">
+                FORM PREVIEW // READY FOR FORMSPREE HOOKUP
+              </span>
+            </div>
+
+            <form id="project-inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="client-name" class="block text-[11px] font-mono uppercase tracking-wider text-slate-300 mb-1">
+                    Your Name *
+                  </label>
+                  <input 
+                    type="text" 
+                    id="client-name" 
+                    required 
+                    placeholder="First & Last Name"
+                    class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-50 placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition"
+                  />
+                </div>
+                <div>
+                  <label for="client-contact" class="block text-[11px] font-mono uppercase tracking-wider text-slate-300 mb-1">
+                    Phone / Preferred Callback *
+                  </label>
+                  <input 
+                    type="text" 
+                    id="client-contact" 
+                    required 
+                    placeholder="(555) 555-5555"
+                    class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-50 placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="project-type" class="block text-[11px] font-mono uppercase tracking-wider text-slate-300 mb-1">
+                    Primary Trade Discipline
+                  </label>
+                  <select 
+                    id="project-type"
+                    class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-50 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition"
+                  >
+                    <option value="Construction & Structural Remodeling">Construction &amp; Structural Remodeling</option>
+                    <option value="Electrical Systems & Diagnostics">Electrical Systems &amp; Diagnostics</option>
+                    <option value="Mechanical Systems & Installations">Mechanical Systems &amp; Installations</option>
+                    <option value="Civil / Multi-System Site Problem Solving">Civil / Multi-System Problem Solving</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="project-location" class="block text-[11px] font-mono uppercase tracking-wider text-slate-300 mb-1">
+                    Location / Target Timeline
+                  </label>
+                  <input 
+                    type="text" 
+                    id="project-location" 
+                    placeholder="Neighborhood / This Month"
+                    class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-50 placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label for="project-brief" class="block text-[11px] font-mono uppercase tracking-wider text-slate-300 mb-1">
+                  Brief Scope Notes *
+                </label>
+                <textarea 
+                  id="project-brief" 
+                  rows="2" 
+                  required
+                  placeholder="Describe the build, remodel, electrical issue, or mechanical setup..."
+                  class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-50 placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-2.5 sm:py-3 px-6 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-display font-bold text-xs sm:text-sm tracking-wide shadow-lg shadow-amber-600/20 transition transform active:scale-[0.99]">
+                SEND PROJECT BRIEF →
+              </button>
+            </form>
+
+            <!-- Instant Confirmation Message Box (No alert()) -->
+            <div id="inquiry-confirmation" class="hidden p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-200 text-xs sm:text-sm space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-emerald-300 flex items-center gap-2">
+                  <span>✓</span> Project Brief Logged for Builds By Daniel
+                </span>
+                <button onclick="resetInquiryForm()" class="text-xs font-mono underline text-emerald-300 hover:text-white">
+                  Send Another
+                </button>
+              </div>
+              <p id="confirmation-summary" class="text-xs text-slate-200 leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrated Deck Footer -->
+        <footer class="pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono text-slate-400 pr-24 sm:pr-36">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-slate-200 font-bold">BUILDS BY DANIEL // ALASKAN NATIVE OWNED &amp; OPERATED</span>
+            <span class="hidden md:inline text-slate-600">|</span>
+            <span class="hidden md:inline text-amber-500/90">CONSTRUCTION • ELECTRICAL • MECHANICAL • CIVIL SOLUTIONS</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span>&copy; 2026 Builds By Daniel</span>
+            <button onclick="goToSlide(0)" class="text-amber-400 hover:text-amber-300 font-bold">
+              BACK TO TOP ↑
+            </button>
+          </div>
+        </footer>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Custom Project Detail Modal -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/85 backdrop-blur-sm p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <span id="modal-tag" class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold"></span>
+          <h3 id="modal-title" class="font-display font-bold text-xl sm:text-2xl text-slate-50 mt-1"></h3>
+        </div>
+        <button onclick="closeProjectModal()" class="p-2 rounded-lg bg-slate-950 text-slate-400 hover:text-white">
+          ✕
+        </button>
+      </div>
+      <div id="modal-body" class="space-y-3 text-sm text-slate-300 leading-relaxed"></div>
+      <div class="pt-3 border-t border-slate-800 flex justify-end gap-3">
+        <button onclick="closeProjectModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700">
+          Close
+        </button>
+        <button onclick="closeProjectModal(); goToSlide(4);" class="px-4 py-2 rounded-xl bg-amber-600 text-slate-950 text-xs font-bold hover:bg-amber-500">
+          Request Similar Work
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Deck state and DOM references
+    const deck = document.getElementById('deck-container');
+    const slides = Array.from(document.querySelectorAll('.slide-section'));
+    const navDots = Array.from(document.querySelectorAll('.nav-dot'));
+    const counterCurrent = document.getElementById('slide-counter-current');
+    const counterLabel = document.getElementById('slide-counter-label');
+    const prevBtn = document.getElementById('prev-slide-btn');
+    const nextBtn = document.getElementById('next-slide-btn');
+
+    let currentSlideIndex = 0;
+    let isAnimatingSlide = false;
+    let slideLockTimer = null;
+
+    // Navigate smoothly by exactly one slide index
+    function goToSlide(index) {
+      const targetIndex = Math.max(0, Math.min(slides.length - 1, index));
+      isAnimatingSlide = true;
+      clearTimeout(slideLockTimer);
+
+      updateSlideIndicators(targetIndex);
+      deck.scrollTo({
+        top: slides[targetIndex].offsetTop,
+        behavior: 'smooth'
+      });
+
+      slideLockTimer = setTimeout(() => {
+        isAnimatingSlide = false;
+      }, 650);
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlideIndex - 1);
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlideIndex + 1);
+    }
+
+    // Update top counter, side dots, and prev/next states
+    function updateSlideIndicators(index) {
+      currentSlideIndex = index;
+      const slideNumber = String(index + 1).padStart(2, '0');
+      counterCurrent.textContent = slideNumber;
+      counterLabel.textContent = slides[index].dataset.title || '';
+
+      navDots.forEach((dot, idx) => {
+        if (idx === index) {
+          dot.classList.add('active');
+          dot.classList.remove('bg-slate-600');
+        } else {
+          dot.classList.remove('active');
+          dot.classList.add('bg-slate-600');
+        }
+      });
+
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === slides.length - 1;
+    }
+
+    // Wheel-assist so mouse wheel & trackpad step cleanly one full-page slide at a time
+    deck.addEventListener('wheel', (e) => {
+      const modalOpen = !document.getElementById('project-modal').classList.contains('hidden');
+      if (modalOpen) return;
+
+      if (Math.abs(e.deltaY) < 12) return;
+      e.preventDefault();
+      if (isAnimatingSlide) return;
+
+      if (e.deltaY > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }, { passive: false });
+
+    // Touch swipe-assist for mobile/tablet full-slide swipe feel
+    let touchStartY = 0;
+    deck.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches.length === 1) {
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    deck.addEventListener('touchend', (e) => {
+      const modalOpen = !document.getElementById('project-modal').classList.contains('hidden');
+      if (modalOpen || isAnimatingSlide) return;
+
+      if (e.changedTouches && e.changedTouches.length === 1) {
+        const deltaY = touchStartY - e.changedTouches[0].clientY;
+        if (Math.abs(deltaY) > 45) {
+          if (deltaY > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+      }
+    }, { passive: true });
+
+    // IntersectionObserver fallback to sync UI state on native scroll snap
+    const slideObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !isAnimatingSlide) {
+          const index = slides.indexOf(entry.target);
+          if (index !== -1) {
+            updateSlideIndicators(index);
+          }
+        }
+      });
+    }, {
+      root: deck,
+      threshold: 0.6
+    });
+
+    slides.forEach((slide) => slideObserver.observe(slide));
+
+    // PowerPoint-style Keyboard Navigation (ArrowUp, ArrowDown, PageUp, PageDown, Space, Escape)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeProjectModal();
+        return;
+      }
+
+      const activeTag = document.activeElement.tagName.toLowerCase();
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select') return;
+
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Keep active slide locked on window resize
+    window.addEventListener('resize', () => {
+      deck.scrollTo({
+        top: slides[currentSlideIndex].offsetTop,
+        behavior: 'auto'
+      });
+    });
+
+    // Project Category Filtering on Slide 04
+    function filterProjects(category, btnEl) {
+      document.querySelectorAll('.filter-btn').forEach((btn) => {
+        btn.classList.remove('bg-amber-600', 'text-slate-950');
+        btn.classList.add('bg-slate-900', 'text-slate-300', 'border', 'border-slate-700');
+      });
+      btnEl.classList.remove('bg-slate-900', 'text-slate-300', 'border', 'border-slate-700');
+      btnEl.classList.add('bg-amber-600', 'text-slate-950');
+
+      document.querySelectorAll('.project-card').forEach((card) => {
+        const categories = (card.dataset.category || '').split(' ');
+        if (category === 'all' || categories.includes(category)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Project Specs Modal Data & Controls
+    const projectDetails = [
+      {
+        tag: 'LOG #104 // STRUCTURAL REMODEL',
+        title: 'Load-Bearing Open-Span Kitchen & Beam Retrofit',
+        body: `
+          <p><strong class="text-slate-100">Challenge:</strong> A 1970s residence suffered from sagging floor joists and two cramped load-bearing partition walls isolating the kitchen.</p>
+          <p><strong class="text-slate-100">Execution:</strong> Shored ceiling joists temporarily, calculated span loads, installed a flush-mounted LVL beam with steel post supports tied into reinforced basement footings, and rerouted 20A kitchen circuits cleanly inside the ceiling cavity.</p>
+          <p><strong class="text-amber-400">Result:</strong> A level, open-concept floor plan with zero drywall cracking and clean electrical rough-in.</p>
+        `
+      },
+      {
+        tag: 'LOG #209 // ELECTRICAL & MECHANICAL',
+        title: 'Workshop Subpanel, 240V Circuitry & Exhaust Rig',
+        body: `
+          <p><strong class="text-slate-100">Challenge:</strong> Client needed reliable high-amperage circuits and fume extraction in an unconditioned outbuilding.</p>
+          <p><strong class="text-slate-100">Execution:</strong> Installed a 100A subpanel with dedicated 240V/50A receptacles, surface-mounted EMT conduit, and engineered a custom-ducted inline exhaust fan with backdraft damper.</p>
+          <p><strong class="text-amber-400">Result:</strong> Safe, code-compliant power distribution and rapid air exchange.</p>
+        `
+      },
+      {
+        tag: 'LOG #312 // CIVIL / SITE BUILDOUT',
+        title: 'French Drain Slope Correction & Utility Trenching',
+        body: `
+          <p><strong class="text-slate-100">Challenge:</strong> Negative yard grade directed storm runoff straight against the slab foundation while power needed to reach a rear shed.</p>
+          <p><strong class="text-slate-100">Execution:</strong> Re-graded perimeter soil, excavated a pitched trench lined with geotextile fabric, washed stone, and perforated pipe to daylight, and laid parallel PVC electrical conduit at proper depth.</p>
+          <p><strong class="text-amber-400">Result:</strong> Permanent water diversion and protected underground power in one coordinated dig.</p>
+        `
+      }
+    ];
+
+    function openProjectModal(idx) {
+      const item = projectDetails[idx];
+      if (!item) return;
+      document.getElementById('modal-tag').textContent = item.tag;
+      document.getElementById('modal-title').textContent = item.title;
+      document.getElementById('modal-body').innerHTML = item.body;
+      const modal = document.getElementById('project-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('project-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Direct Inquiry Form Submission Handler
+    function handleInquirySubmit(event) {
+      event.preventDefault();
+      try {
+        const name = document.getElementById('client-name').value.trim();
+        const contact = document.getElementById('client-contact').value.trim();
+        const type = document.getElementById('project-type').value;
+        const location = document.getElementById('project-location').value.trim();
+        const brief = document.getElementById('project-brief').value.trim();
+
+        const form = document.getElementById('project-inquiry-form');
+        const confirmation = document.getElementById('inquiry-confirmation');
+        const summary = document.getElementById('confirmation-summary');
+
+        const locNote = location ? ` (${location})` : '';
+        summary.textContent = `Thanks, ${name}. Your ${type} inquiry${locNote} for Builds By Daniel ("${brief.slice(0, 80)}${brief.length > 80 ? '...' : ''}") is logged. Daniel will reach back out at ${contact}.`;
+        form.classList.add('hidden');
+        confirmation.classList.remove('hidden');
+      } catch (err) {
+        console.error('Form handling error:', err);
+      }
+    }
+
+    function resetInquiryForm() {
+      const form = document.getElementById('project-inquiry-form');
+      const confirmation = document.getElementById('inquiry-confirmation');
+      form.reset();
+      confirmation.classList.add('hidden');
+      form.classList.remove('hidden');
+    }
+
+    // Initialize first slide state on load
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSlideIndicators(0);
+    });
+  </script>
+</body>
+</html>
